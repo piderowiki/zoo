@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ynu.zoo.mapper.RoomMapper">
+  <resultMap id="BaseResultMap" type="com.ynu.zoo.PO.Room">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="online_people" jdbcType="VARCHAR" property="onlinePeople" />
+    <result column="is_begin" jdbcType="VARCHAR" property="isBegin" />
+    <result column="ready_people" jdbcType="VARCHAR" property="readyPeople" />
+    <result column="Personnel_id" jdbcType="INTEGER" property="personnelId" />
+    <result column="first" jdbcType="INTEGER" property="first" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="spare" jdbcType="VARCHAR" property="spare" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, name, type, online_people, is_begin, ready_people, Personnel_id, first, time, 
+    spare
+  </sql>
+  <select id="selectByExample" parameterType="com.ynu.zoo.PO.RoomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_room
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_room
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ynu.zoo.PO.RoomExample">
+    delete from t_room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ynu.zoo.PO.Room">
+    insert into t_room (ID, name, type, 
+      online_people, is_begin, ready_people, 
+      Personnel_id, first, time, 
+      spare)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{onlinePeople,jdbcType=VARCHAR}, #{isBegin,jdbcType=VARCHAR}, #{readyPeople,jdbcType=VARCHAR}, 
+      #{personnelId,jdbcType=INTEGER}, #{first,jdbcType=INTEGER}, #{time,jdbcType=INTEGER}, 
+      #{spare,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ynu.zoo.PO.Room">
+    insert into t_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="onlinePeople != null">
+        online_people,
+      </if>
+      <if test="isBegin != null">
+        is_begin,
+      </if>
+      <if test="readyPeople != null">
+        ready_people,
+      </if>
+      <if test="personnelId != null">
+        Personnel_id,
+      </if>
+      <if test="first != null">
+        first,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="spare != null">
+        spare,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="onlinePeople != null">
+        #{onlinePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="isBegin != null">
+        #{isBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="readyPeople != null">
+        #{readyPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="personnelId != null">
+        #{personnelId,jdbcType=INTEGER},
+      </if>
+      <if test="first != null">
+        #{first,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="spare != null">
+        #{spare,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ynu.zoo.PO.RoomExample" resultType="java.lang.Long">
+    select count(*) from t_room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_room
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.onlinePeople != null">
+        online_people = #{record.onlinePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isBegin != null">
+        is_begin = #{record.isBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readyPeople != null">
+        ready_people = #{record.readyPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personnelId != null">
+        Personnel_id = #{record.personnelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.first != null">
+        first = #{record.first,jdbcType=INTEGER},
+      </if>
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=INTEGER},
+      </if>
+      <if test="record.spare != null">
+        spare = #{record.spare,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_room
+    set ID = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      online_people = #{record.onlinePeople,jdbcType=VARCHAR},
+      is_begin = #{record.isBegin,jdbcType=VARCHAR},
+      ready_people = #{record.readyPeople,jdbcType=VARCHAR},
+      Personnel_id = #{record.personnelId,jdbcType=INTEGER},
+      first = #{record.first,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=INTEGER},
+      spare = #{record.spare,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ynu.zoo.PO.Room">
+    update t_room
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="onlinePeople != null">
+        online_people = #{onlinePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="isBegin != null">
+        is_begin = #{isBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="readyPeople != null">
+        ready_people = #{readyPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="personnelId != null">
+        Personnel_id = #{personnelId,jdbcType=INTEGER},
+      </if>
+      <if test="first != null">
+        first = #{first,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="spare != null">
+        spare = #{spare,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ynu.zoo.PO.Room">
+    update t_room
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      online_people = #{onlinePeople,jdbcType=VARCHAR},
+      is_begin = #{isBegin,jdbcType=VARCHAR},
+      ready_people = #{readyPeople,jdbcType=VARCHAR},
+      Personnel_id = #{personnelId,jdbcType=INTEGER},
+      first = #{first,jdbcType=INTEGER},
+      time = #{time,jdbcType=INTEGER},
+      spare = #{spare,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
