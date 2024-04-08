@@ -28,4 +28,6 @@ public interface RoomMapper {
     int updateByPrimaryKeySelective(Room record);
 
     int updateByPrimaryKey(Room record);
+
+    List<Room> selectByNameAndType(@Param("roomName") String roomName,@Param("gameType")int gameType);
 }

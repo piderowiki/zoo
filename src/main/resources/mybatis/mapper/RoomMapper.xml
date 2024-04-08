@@ -105,7 +105,8 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ynu.zoo.PO.Room">
+  <insert id="insert" parameterType="com.ynu.zoo.PO.Room"
+  useGeneratedKeys="true" keyProperty="id">
     insert into t_room (ID, name, type, 
       online_people, is_begin, ready_people, 
       Personnel_id, first, time, 
@@ -188,7 +189,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="selectByNameAndType" resultType="com.ynu.zoo.PO.Room">
+        select
+      <include refid="Base_Column_List" />
+      from t_room
+      where name like '%${roomName}%'
+      and type = #{gameType}
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update t_room
     <set>
       <if test="record.id != null">

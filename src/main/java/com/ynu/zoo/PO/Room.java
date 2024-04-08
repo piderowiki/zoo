@@ -7,12 +7,16 @@ public class Room {
 
     private Integer type;
 
+    // 你好,你被废弃了
     private String onlinePeople;
-
+    // 你也被废了
     private String isBegin;
 
+    // 你好,你也被废弃了,因为我弄错了类型
+    // 你俩就准备给personnelList取代吧
+    // ready人数准备给HashMap取代
     private String readyPeople;
-
+    // 真没想到,连你也有被废弃的一天
     private Integer personnelId;
 
     private Integer first;
@@ -99,5 +103,21 @@ public class Room {
 
     public void setSpare(String spare) {
         this.spare = spare;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", onlinePeople='" + onlinePeople + '\'' +
+                ", isBegin='" + isBegin + '\'' +
+                ", readyPeople='" + readyPeople + '\'' +
+                ", personnelId=" + personnelId +
+                ", first=" + first +
+                ", time=" + time +
+                ", spare='" + spare + '\'' +
+                '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.ynu.zoo;
 
+import com.ynu.zoo.VO.NettyMessagePOJO;
+import com.ynu.zoo.handler.GameHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -8,17 +10,26 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class ZooServer {
-    private int port;
+import javax.annotation.PostConstruct;
 
-    public ZooServer(int port) {
-        this.port = port;
-    }
+@Component("ZooServer")
+@Slf4j
+public class ZooServer implements Runnable {
+    private int port = 9999;
+    @Autowired
+    private GameHandler gameHandler;
 
-    public void run() throws InterruptedException {
+
+    @Override
+    public void run() {
         // 创建两个线程组
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();// 有8个子线程
@@ -34,19 +45,23 @@ public class ZooServer {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             // 获取到pipeline
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            // 向pipeline加入解码器
-                            pipeline.addLast("decoder", new StringDecoder());
-                            // 向pipeline加入编码器
-                            pipeline.addLast("encoder", new StringEncoder());
+                            pipeline.addLast("decoder",new ProtobufDecoder(
+                                    NettyMessagePOJO.NettyMessage.getDefaultInstance()
+                            ));
+                            pipeline.addLast("encoder",new ProtobufEncoder());
                             // 加入自己的Handler
-                            pipeline.addLast(null);
+                            pipeline.addLast(gameHandler);
                         }
                     });
             System.out.println("netty服务器开始启动...");
             ChannelFuture channelFuture = bootstrap.bind(port).sync();
             // 监听关闭
             channelFuture.channel().closeFuture().sync();
-        }finally {
+
+        }catch (Exception e){
+            log.error("netty连接出现了问题");
+        }
+        finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

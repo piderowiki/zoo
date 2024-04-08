@@ -102,7 +102,8 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ynu.zoo.PO.RoomListPeople">
+  <insert id="insert" parameterType="com.ynu.zoo.PO.RoomListPeople"
+  useGeneratedKeys="true" keyProperty="id">
     insert into t_room_people (ID, room_id, people_max, 
       spare, player1, player2, 
       player3, player4)

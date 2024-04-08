@@ -1,5 +1,6 @@
 package com.ynu.zoo.PO;
 
+// 设计出错了!应该是有一堆作为List，而不是一个记录一堆
 public class RoomListPeople {
     private Integer id;
 
@@ -10,7 +11,7 @@ public class RoomListPeople {
     private String spare;
 
     private String player1;
-
+    // 好,我宣布剩下仨全都给废了
     private String player2;
 
     private String player3;
