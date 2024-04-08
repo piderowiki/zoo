@@ -10,3 +10,6 @@
 目前还仍待改进的bug:
 * Netty存在粘包问题
 * 网络波动时存在大量问题，考虑使用MQ来解决消息发送的可靠性问题
+
+安卓前端地址:
+https://github.com/piderowiki/ZooAndroid
